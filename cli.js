@@ -20,7 +20,7 @@ if (!argv.output) {
     process.exit(1);
 }
 
-let files = argv._.length ? argv._ : glob('./*.{zip,rar}');
+let files = argv._.length ? argv._ : glob('./*.{zip,rar,7z}');
 
 require('mkdirp').sync(argv.output);
 require('./index')(files, argv.output);
