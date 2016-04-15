@@ -8,5 +8,5 @@
 let exec = require('child_process').execSync;
 
 module.exports = (sourceFile, destinationFolder) => {
-    exec(`unrar x ${sourceFile} ${destinationFolder}`, {stdio: [process.stdin, 'pipe', process.stderr]});
+    exec(`unrar x "${sourceFile}" "${destinationFolder}"`, {stdio: [process.stdin, 'pipe', process.stderr]});
 };

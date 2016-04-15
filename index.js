@@ -22,7 +22,7 @@ let unpackFile = file => {
 };
 
 let packZip = async (sourceFolder, destinationFile) => {
-    exec(`zip -r -0 ${path.resolve(destinationFile)} ./*`, {cwd: sourceFolder});
+    exec(`zip -r -0 "${path.resolve(destinationFile)}" ./*`, {cwd: sourceFolder});
 };
 
 module.exports = (list, outputFolder) => {

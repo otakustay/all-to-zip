@@ -8,5 +8,5 @@
 let exec = require('child_process').execSync;
 
 module.exports = (sourceFile, destinationFolder) => {
-    exec(`unzip ${sourceFile} -d ${destinationFolder}`, {stdio: [process.stdin, 'pipe', process.stderr]});
+    exec(`unzip "${sourceFile}" -d "${destinationFolder}"`, {stdio: [process.stdin, 'pipe', process.stderr]});
 };
