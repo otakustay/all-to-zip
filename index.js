@@ -21,7 +21,7 @@ let unpackFile = file => {
     return destinationFolder;
 };
 
-let packZip = async (sourceFolder, destinationFile) => {
+let packZip = (sourceFolder, destinationFile) => {
     exec(`zip -r -0 "${path.resolve(destinationFile)}" ./*`, {cwd: sourceFolder});
 };
 
