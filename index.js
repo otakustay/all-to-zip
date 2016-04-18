@@ -3,20 +3,20 @@
  * @author otakustay
  */
 
-'use strict';
+import 'babel-polyfill';
 
-require('babel-polyfill');
+import path from 'path';
+import temp from 'temp';
+import {execSync as exec} from 'child_process';
+import unpack from './unpack/index';
 
-let path = require('path');
-let temp = require('temp').track();
-let exec = require('child_process').execSync;
+temp.track();
 
 let unpackFile = file => {
     let extension = path.extname(file);
-    let unpack = require(`./unpack/${extension.slice(1)}`);
 
     let destinationFolder = temp.mkdirSync();
-    unpack(file, destinationFolder);
+    unpack[extension.slice(1)](file, destinationFolder);
 
     return destinationFolder;
 };
@@ -25,7 +25,7 @@ let packZip = async (sourceFolder, destinationFile) => {
     exec(`zip -r -0 "${path.resolve(destinationFile)}" ./*`, {cwd: sourceFolder});
 };
 
-module.exports = (list, outputFolder) => {
+export default function (list, outputFolder) {
     for (let i = 0; i < list.length; i++) {
         let file = list[i];
         let info = path.parse(file);
@@ -47,4 +47,4 @@ module.exports = (list, outputFolder) => {
             console.error(`Failed to convert ${info.base}: ${error.message}`);
         }
     }
-};
+}

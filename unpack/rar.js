@@ -3,10 +3,8 @@
  * @author otakustay
  */
 
-'use strict';
+import {execSync as exec} from 'child_process';
 
-let exec = require('child_process').execSync;
-
-module.exports = (sourceFile, destinationFolder) => {
+export default function (sourceFile, destinationFolder) {
     exec(`unrar x "${sourceFile}" "${destinationFolder}"`, {stdio: [process.stdin, 'pipe', process.stderr]});
-};
+}

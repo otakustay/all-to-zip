@@ -3,10 +3,8 @@
  * @author otakustay
  */
 
-'use strict';
+import {execSync as exec} from 'child_process';
 
-let exec = require('child_process').execSync;
-
-module.exports = (sourceFile, destinationFolder) => {
+export default function (sourceFile, destinationFolder) {
     exec(`7za x "${sourceFile}" -o"${destinationFolder}" -bso2`, {stdio: [process.stdin, 'pipe', process.stderr]});
-};
+}

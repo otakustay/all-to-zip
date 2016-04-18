@@ -5,9 +5,9 @@
  * @author otakustay
  */
 
-'use strict';
-
-let glob = require('glob').sync;
+import glob from 'glob';
+import mkdirp from 'mkdirp';
+import index from './index';
 
 const CLI_ALIAS = {
     output: 'o'
@@ -20,7 +20,7 @@ if (!argv.output) {
     process.exit(1);
 }
 
-let files = argv._.length ? argv._ : glob('./*.{zip,rar,7z}');
+let files = argv._.length ? argv._ : glob.sync('./*.{zip,rar,7z}');
 
-require('mkdirp').sync(argv.output);
-require('./index')(files, argv.output);
+mkdirp.sync(argv.output);
+index(files, argv.output);
