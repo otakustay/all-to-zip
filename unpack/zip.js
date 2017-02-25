@@ -6,5 +6,5 @@
 import {execSync as exec} from 'child_process';
 
 export default function (sourceFile, destinationFolder) {
-    exec(`unzip -qq "${sourceFile}" -d "${destinationFolder}"`, {stdio: 'inherit'});
+    exec(`7za x "${sourceFile}" -bd -o"${destinationFolder}" -bso2`, {stdio: 'inherit'});
 }
