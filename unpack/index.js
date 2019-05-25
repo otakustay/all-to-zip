@@ -1,7 +1,7 @@
-import zip from './zip';
-import rar from './rar';
+const zip = require('./zip');
+const rar = require('./rar');
 
-export default {
+module.exports = {
     'zip': zip,
     'rar': rar,
     '7z': zip

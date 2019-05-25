@@ -5,15 +5,15 @@
  * @author otakustay
  */
 
-import glob from 'glob';
-import mkdirp from 'mkdirp';
-import index from './index';
+const glob = require('glob');
+const mkdirp = require('mkdirp');
+const index = require('./index');
 
 const CLI_ALIAS = {
     output: 'o'
 };
 
-var argv = require('minimist')(process.argv.slice(2), {alias: CLI_ALIAS});
+const argv = require('minimist')(process.argv.slice(2), {alias: CLI_ALIAS});
 
 if (!argv.output) {
     console.error('Must specify output folder with -o option');

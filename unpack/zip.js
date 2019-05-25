@@ -3,8 +3,7 @@
  * @author otakustay
  */
 
-import {execSync as exec} from 'child_process';
-
-export default function (sourceFile, destinationFolder) {
-    exec(`7za x "${sourceFile}" -bd -o"${destinationFolder}" -bso2`, {stdio: 'inherit'});
-}
+module.exports = (sourceFile, destinationFolder, spawn) => spawn(
+    '7za',
+    ['x', sourceFile, '-bd', `-o${destinationFolder}`, '-bso2']
+);

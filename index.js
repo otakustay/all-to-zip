@@ -3,20 +3,23 @@
  * @author otakustay
  */
 
-import 'babel-polyfill';
+const path = require('path');
+const temp = require('temp');
+const chalk = require('chalk');
+const {execSync: exec} = require('child_process');
+const unpack = require('./unpack/index');
+const {withAnswer} = require('./pty');
+const {passwords} = require('./config');
 
-import path from 'path';
-import temp from 'temp';
-import {execSync as exec} from 'child_process';
-import unpack from './unpack/index';
+const spawn = withAnswer(passwords);
 
 temp.track();
 
-let unpackFile = file => {
+let unpackFile = async file => {
     let extension = path.extname(file);
 
     let destinationFolder = temp.mkdirSync();
-    unpack[extension.slice(1)](file, destinationFolder);
+    await unpack[extension.slice(1)](file, destinationFolder, spawn);
 
     return destinationFolder;
 };
@@ -25,7 +28,7 @@ let packZip = (sourceFolder, destinationFile) => {
     exec(`zip -r -0 "${path.resolve(destinationFile)}" ./*`, {cwd: sourceFolder});
 };
 
-export default function (list, outputFolder) {
+module.exports = async (list, outputFolder) => {
     for (let i = 0; i < list.length; i++) {
         let file = list[i];
         let info = path.parse(file);
@@ -34,7 +37,7 @@ export default function (list, outputFolder) {
         try {
             console.log(`${prefix} Extracting ${info.base}`);
 
-            let folder = unpackFile(file);
+            let folder = await unpackFile(file);
             let zipFile = info.name + '.zip';
 
             console.log(`${prefix} Packing ${info.base} to ${zipFile}`);
@@ -44,7 +47,7 @@ export default function (list, outputFolder) {
             console.log(`${prefix} Finished ${info.base}`);
         }
         catch (error) {
-            console.error(`Failed to convert ${info.base}: ${error.message}`);
+            console.error(chalk.red(`Failed to convert ${info.base}: ${error.message}`));
         }
     }
 }

@@ -3,8 +3,7 @@
  * @author otakustay
  */
 
-import {execSync as exec} from 'child_process';
-
-export default function (sourceFile, destinationFolder) {
-    exec(`unrar x -idq "${sourceFile}" "${destinationFolder}"`, {stdio: 'inherit'});
-}
+module.exports = (sourceFile, destinationFolder, spawn) => spawn(
+    'unrar',
+    ['x', sourceFile, destinationFolder]
+);
